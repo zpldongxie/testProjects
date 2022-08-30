@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>阴阳刺青师</title>
+  <style>
+    body {
+      background-color: gainsboro;
+    }
+
+    div {
+      text-align: center;
+      margin: 35vh auto;
+      width: 60vw;
+      min-width: 375px;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      padding: 0;
+    }
+
+    li {
+      padding: 6px 16px;
+      border: 1px dashed #bbbbbb;
+      margin-bottom: 16px;
+    }
+
+    input {
+      width: 40px;
+      text-align: center;
+      background-color: transparent;
+      padding-left: 15px;
+      border: none;
+    }
+
+    button {
+      background-color: cornflowerblue;
+      border: 1px solid cornflowerblue;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <ul>
+      <li onclick="javascript:getBook(this)" src='/恐怖惊悚/阴阳刺青师/' len='4'>阴阳刺青师</li>
+      <li onclick="javascript:getBook(this)" src='/恐怖惊悚/麻衣鬼相/' len='3'>麻衣鬼相</li>
+      <li onclick="javascript:getBook(this)" src='/玄幻奇幻/九鼎记_晨诵无声/' len='3'>九鼎记</li>
+      <li onclick="javascript:getBook(this)" src='/玄幻奇幻/三界红包群/' len='4'>三界红包群</li>
+      <!-- <li onclick="javascript:getBook(this)"></li> -->
+    </ul>
+    <p>
+      当前播放:<span id="book" style="margin-right: 20px;">阴阳刺青师</span>第
+      <input type="number" value="1" id="step" onblur="curStep()" />集；
+      <button onclick="myMusic()">播放</button>
+    </p>
+    <audio controls autoplay='autoplay' id="audio"></audio>
+  </div>
+  <script>
+    var $src = "https://t3344t.tingchina.com/yousheng";
+    var currentBook = '/恐怖惊悚/阴阳刺青师/';
+    var currentStep = '0001';
+    var currentLen = 4;
+    var audio = document.getElementById("audio");
+    var book = document.getElementById("book");
+    audio.addEventListener('ended', function () {
+      //监听到播放结束后，在此处可调用自己的接口
+      var newStep = (Number(currentStep) + 1);
+      document.getElementById("step").value = newStep;
+      currentStep = exchangeNum(newStep.toString(), currentLen);
+      myMusic();
+    }, false);
+
+    function getBook(obj) {
+      currentBook = obj.getAttribute('src');
+      currentLen = obj.getAttribute('len');
+      document.getElementById("step").value = '1';
+      currentStep = exchangeNum('1', currentLen);
+      book.innerText = obj.innerText;
+      myMusic();
+    }
+
+    function curStep() {
+      var val = document.getElementById("step").value.toString();
+      currentStep = exchangeNum(val, currentLen);
+    }
+
+    function myMusic() {
+      if (currentBook.includes('http')) {
+        document.getElementById("audio").src = currentBook + currentStep + '.mp3';
+      } else {
+        document.getElementById("audio").src = $src + currentBook + currentStep + '.mp3';
+      }
+      audio.play();
+    }
+
+    function exchangeNum(nowStep, nowLen) {
+      if (nowStep.length >= Number(nowLen)) {
+        return nowStep;
+      } else {
+        var newStep = '0' + nowStep;
+        return exchangeNum(newStep, nowLen);
+      }
+    }
+  </script>
+</body>
+
+</html>
