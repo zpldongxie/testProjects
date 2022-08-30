@@ -1,0 +1,103 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  
+  .ui-bgc {
+    width: 100vw;
+    height: 100vh;
+    .bgc {
+      width: 100vw;
+      height: 70vh;
+      background-image: url(../img/beijing.png);
+      background-size: 100% 100%;
+      .logos {
+        width: 140px;
+        margin-left: 15px;
+        margin-top: 25px;
+      }
+    }
+    
+    .ui-box {
+      width: 100vw;
+      height: 30vh;
+      position: relative;
+      div{
+        width: 100vw;
+        height: 40px;
+        .ui-tishi {
+          display: none;
+          text-align: center;
+          color: #222;
+          font-size: 14px;
+          animation: dongHua 1s 1 ease-in-out;
+          -webkit-margin-before: 0;
+          -webkit-margin-after: 0;
+          line-height: 45px;
+        }
+    
+        @keyframes dongHua {
+          0% {
+            opacity: 0;
+          }
+    
+          100% {
+            opacity: 1;
+          }
+        }
+      }
+      .ui-btn{
+        position: absolute;
+        top: 2rem;
+        right: 0;
+        left: 0;
+        bottom: 0;
+      }
+      .ui-downapp {
+        background: #ff6d3a;
+        display: block;
+        width: 12.5rem;
+        height: 2.2rem;
+        border-radius: 5px;
+        position: relative;
+        margin: 0 auto;
+        line-height: 35px;
+        border: none;
+        text-align: center;
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        img{
+          width: 14px;
+          height: 14px;
+        }
+      }
+  
+      .ui-downApp {
+        border: 1px solid #ff6d3a;
+        display: block;
+        width: 198px;
+        height: 33px;
+        border-radius: 5px;
+        top: 1.4rem;
+        position: relative;
+        margin: 0 auto;
+        line-height: 35px;
+        text-align: center;
+        color: #ff6d3a;
+        text-decoration: none;
+        img{
+          width: 11px;
+          height: 14px;;
+      }
+      }
+      .ui-ios-tip {
+        text-align: center;
+        line-height: 30px;
+        font-size: 12px;
+        margin-top: 1.6rem;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一年级7班课表</title>
+  <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+
+<body>
+  <div class="con">
+    <div class="title">一年级7班</div>
+    <div class="subTitle">课程表</div>
+    <img src="./tu02.png" alt="闹钟" class="clock">
+    <div class="table">
+      <div class="head">
+        <div class="hcol">
+          <div></div>
+        </div>
+        <div class="hcol">
+          <div>星期一</div>
+        </div>
+        <div class="hcol">
+          <div>星期二</div>
+        </div>
+        <div class="hcol">
+          <div>星期三</div>
+        </div>
+        <div class="hcol">
+          <div>星期四</div>
+        </div>
+        <div class="hcol">
+          <div>星期五</div>
+        </div>
+      </div>
+      <div class="row" key="早读">
+        <div class="title"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row" key="第一节">
+        <div class="title"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row" key="第二节">
+        <div class="title"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row" key="第三节">
+        <div class="title"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row" key="第四节">
+        <div class="title"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row" key="午休">
+        <div class="title"></div>
+      </div>
+      <div class="row" key="第五节">
+        <div class="title"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row" key="第六节">
+        <div class="title"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getClass(kc) {
+      switch (kc) {
+        case '语文':
+          return 'yw'
+        case '数学':
+          return 'sx'
+        case '英语':
+          return 'yy'
+        case '科学':
+          return 'kx'
+        case '道德':
+          return 'dd'
+        default:
+          return 'qt'
+      }
+    }
+  </script>
+  <script>
+    const list = [
+      {
+        title: '早读',
+        classes: ['语文', '语文', '数学', '数学', '英语'],
+      },
+      {
+        title: '第一节',
+        classes: ['数学', '语文', '数学', '语文', '数学'],
+      },
+      {
+        title: '第二节',
+        classes: ['英语', '数学', '语文', '数学', '语文'],
+      },
+      {
+        title: '第三节',
+        classes: ['语文', '语文', '体育', '音乐', '道德'],
+      },
+      {
+        title: '第四节',
+        classes: ['美术', '美术', '语文', '语文', '英语'],
+      },
+      {
+        title: '午休（12:00 ~ 14:15）',
+      },
+      {
+        title: '第五节',
+        classes: ['语文', '音乐', '科学', '足球', '语文'],
+      },
+      {
+        title: '第六节',
+        classes: ['体育', '足球', '综合', '道德', '少队课'],
+      }
+    ]
+    list.forEach((item, i) => {
+      const row = document.querySelectorAll('.row')[i]
+      row.querySelector('.title').innerHTML = `<div>${item.title}</div>`
+      if (item.classes) {
+        item.classes.forEach((c, j) => {
+          const col = row.querySelectorAll('.col')[j]
+          col.innerHTML = `<div>${c}</div>`
+          col.classList.add(getClass(c))
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

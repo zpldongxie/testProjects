@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>testIDP</title>
+  </head>
+  <body>
+    <div style="margin: 0 auto; max-width: 1000px">
+      <h3>部门操作</h3>
+      <hr />
+      <button id="updateDevBtn">推送部门</button>
+      <button id="delDevBtn">删除部门</button>
+      <button id="calcDevBtn">更新部门用户数</button>
+      <div style="font-size: 12px; height: 40px; line-height: 40px; color: red">
+        注意，不能直接删除包含用户的部门。
+      </div>
+
+      <h3>用户操作</h3>
+      <hr />
+      <button id="updateUserBtn">推送用户</button>
+      <button id="delUserBtn">删除用户</button>
+
+      <h3>权限操作</h3>
+      <hr />
+      <button id="uploadAppStrategyBtn">同步用户授权</button>
+
+      <h3>云信IM</h3>
+      <hr />
+      <input id="jsr" type="text" value="20070027" />
+      <button id="sendAttachMsg">发送测试通知</button>
+    </div>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+      // 配置信息
+      var managerInfos = {
+        xjxy: {
+          host: "http://59.75.39.25:30081",
+          companyName: "xjxy",
+          desc: "西京学院移动化",
+        },
+      };
+      // 需要测试的时候再设置host和companyName
+      var IDP_HOST = managerInfos.xjxy.host;
+      // var IDP_HOST = '';
+      var companyName = managerInfos.xjxy.companyName;
+
+      // 测试数据
+      var testDepartment = {
+        id: "20000",
+        name: "机构新增测试",
+        parent_department_id: "0",
+      };
+      var testUser = {
+        login_name: "20078006",
+        department_id: testDepartment.id,
+        user_id: "20078006",
+        is_disabled: "0",
+        name: "马蓉（西京学院）",
+        mobile: "18629098484",
+        employee_no: "20078006",
+        title: "学生",
+        email: "zpl@clouddeep.cn",
+      };
+      var testUser1 = {
+        login_name: "20078010",
+        department_id: testDepartment.id,
+        user_id: "20078010",
+        is_disabled: "0",
+        name: "刘玉平（西京学院）",
+        mobile: "18629098485",
+        employee_no: "20078010",
+        title: "员工",
+        email: "zpl01@clouddeep.cn",
+      };
+      var testRule = [
+        {
+          userId: "20078006",
+          strategies: "BYSLXGL,XSXXGL",
+        },
+      ];
+      function sendAjax(options) {
+        const {
+          url = "",
+          type = "post",
+          data = {},
+          okAction = (result) => {
+            console.log(result);
+          },
+          errorAction = () => {},
+        } = options;
+
+        $.ajax({
+          url,
+          type,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          data,
+          success: okAction,
+        });
+      }
+    </script>
+    <script>
+      /**
+       * 推送部门
+       *
+       * @param {*} [devInfo=testDepartment]
+       */
+      function updateDev(devInfo = testDepartment) {
+        sendAjax({
+          url: IDP_HOST + "/" + companyName + "/userData/update",
+          data: JSON.stringify({
+            dep: [devInfo],
+          }),
+          okAction: function (result) {
+            console.log(result);
+          },
+        });
+      }
+
+      /**
+       * 推送用户
+       *
+       * @param {*} [userInfo=testUser]
+       */
+      function updateUser(userInfo = testUser) {
+        sendAjax({
+          url: IDP_HOST + "/" + companyName + "/userData/update",
+          data: JSON.stringify({
+            user: [userInfo],
+          }),
+          okAction: (result) => {
+            console.log(result);
+          },
+        });
+      }
+
+      /**
+       * 删除部门
+       *
+       * @param {*} department_id
+       */
+      function delDev(department_id = testDepartment.id) {
+        sendAjax({
+          type: "delete",
+          url: IDP_HOST + "/" + companyName + "/userData/del",
+          data: JSON.stringify({
+            department_id: department_id,
+          }),
+          okAction: function (result) {
+            console.log(result);
+          },
+        });
+      }
+
+      /**
+       * 删除用户
+       *
+       * @param {*} [user_id=testUser.user_id]
+       */
+      function delUser(user_id = testUser.user_id) {
+        sendAjax({
+          type: "delete",
+          url: IDP_HOST + "/" + companyName + "/userData/del",
+          data: JSON.stringify({
+            user_id: user_id,
+          }),
+          okAction: function (result) {
+            console.log(result);
+          },
+        });
+      }
+
+      /**
+       * 触发所有部门人数统计，第三方无需调用
+       *
+       */
+      function calcDev() {
+        sendAjax({
+          url: IDP_HOST + "/" + companyName + "/calcdepartmentid",
+          okAction: function (result) {
+            console.log(result);
+          },
+        });
+      }
+
+      /**
+       * 同步用户授权
+       *
+       */
+      function uploadAppStrategy() {
+        sendAjax({
+          url: IDP_HOST + "/" + companyName + "/uploadAppStrategy",
+          data: JSON.stringify(testRule),
+          okAction: function (result) {
+            console.log(result);
+          },
+        });
+      }
+    </script>
+    <script>
+      /**
+       * 测试发送IM通知
+       **/
+      function testSendAttachMsg() {
+        $("#sendAttachMsg")
+          .off()
+          .click(function () {
+            const userId = $("#jsr").val();
+            const testData = {
+              pushcontent: "开具介绍信申请（教师）",
+              LCID: "1245023",
+              XXID: "d504121275ed40ea826efbdd5b8b2967",
+              JSR: userId,
+              toAccids: [userId],
+              LYXT: "XLC",
+              attach: "您的开具介绍信申请（教师）待提交;",
+            };
+            const testData1 = {
+              pushcontent: "圣诞节问卷1",
+              LCID: "oa",
+              XXID: "B740F38D5C914B6EE05303CDA8C054B3",
+              JSR: userId,
+              toAccids: `[${userId}]`,
+              LYXT: "DCWJ",
+              attach: "圣诞节问卷1",
+              XTURL:
+                "http://219.144.130.187:8090/dcwjxt/answer.do?guid=m98q3mA%2BgY8QwVH7EwSbkFV0FhGhR%2FRDROFRo1EakB8w78dqmENlBwu4qJAGx%2BeH",
+              TASKTYPE: null,
+            };
+
+            let params={
+              "name": "m3ceshi",
+              "password": "d524139d-13c3-4b9c-88d8-a6cea2c0e8d7",
+              // "ticket": "xxxxticket",
+              "ext": "扩张参数"
+            };
+            params = encodeURI(JSON.stringify(params),"utf-8");
+            const testData2 = {
+              pushcontent: "OA",
+              LCID: "oa",
+              XXID: "B740F38D5C914B6EE05303CDA8C054B5",
+              JSR: userId,
+              toAccids: `[${userId}]`,
+              LYXT: "OA",
+              attach: "OA测试",
+              XTURL: 'http://zpldongxie.gicp.net:5501/xijingMobile/oaIndex.html',
+              // XTURL: `seeyon://m3?loginParams=${params}`,
+              TASKTYPE: null,
+            };
+            sendAjax({
+              url: IDP_HOST + "/" + companyName + "/api/sendAttachMsg",
+              data: JSON.stringify(testData2),
+              okAction: function (result) {
+                // alert("数据: \n" + data + "\n状态: " + status);
+                console.log(result);
+              },
+            });
+          });
+      }
+    </script>
+    <script>
+      $(function () {
+        $("#updateDevBtn")
+          .off()
+          .on("click", function () {
+            updateDev();
+          });
+        $("#updateUserBtn")
+          .off()
+          .on("click", function () {
+            updateUser();
+          });
+        $("#delDevBtn")
+          .off()
+          .on("click", function () {
+            delDev();
+          });
+        $("#delUserBtn")
+          .off()
+          .on("click", function () {
+            delUser();
+          });
+        $("#calcDevBtn").off().on("click", calcDev);
+        $("#uploadAppStrategyBtn")
+          .off()
+          .on("click", function () {
+            uploadAppStrategy();
+          });
+        // 测试发送IM通知
+        testSendAttachMsg();
+      });
+    </script>
+  </body>
+</html>

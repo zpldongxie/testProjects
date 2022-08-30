@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="title">掌上西京</title>
+  <link rel="stylesheet" href="style/app.css">
+  <style>
+  
+  </style>
+</head>
+
+<body>
+  <div class="ui-bgc">
+    <div class="bgc">
+      <img src="./img/logos.png" alt="" class="logos">
+    </div>
+    <div class="ui-box">
+      <div><p class="ui-tishi">请返回桌面查看安装情况</p></div>
+      <a class="ui-downapp"
+        href='itms-services:///?action=download-manifest&url=https://blog.zhupengliang.cn/temp/app.plist'>立即下载</a>
+      <a class='ui-downApp' href="doc.html"> <img src="./img/shezhi.png" alt=""> 设置说明</a>
+      <p class="ui-ios-tip">安装完成后请先设置信任企业证书，详情请查设置说明</p>
+    </div>
+  </div>
+  <!-- <script src="style/jquery-1.10.2.min.htm"></script> -->
+  <script>
+    const downBtn = document.querySelector('.ui-downapp');
+    const downTip = document.querySelector('.ui-tishi');
+    const lastTip = document.querySelector('.ui-ios-tip');
+    const onDownload = () => {
+      // 按钮禁用
+      downBtn.setAttribute('disabled', true);
+      downBtn.style['pointer-events'] = 'none';
+      downBtn.removeEventListener('click', onDownload);
+      // 改内容
+      downBtn.innerHTML = '<img src="" alt=""> 正在下载';
+      downBtn.style.opacity = '0.5';
+      downBtn.querySelector('img').src = './img/loadings.gif';
+      setTimeout(() => {
+        // 5秒后切换到提示
+        downTip.style.display = 'block';
+      }, 5000);
+    }
+    downBtn.addEventListener('click', onDownload);
+  </script>
+  <script>
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    }
+  </script>
+</body>
+
+</html>

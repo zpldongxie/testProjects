@@ -1,0 +1,115 @@
+<!--
+ * @description: 测试项目
+ * @author: zpl
+ * @Date: 2020-12-23 11:00:00
+ * @LastEditTime: 2020-12-23 19:13:53
+ * @LastEditors: zpl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试项目</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h3>这是一个测试项目，用于展示测试页面或其他项目临时部署的文件</h3>
+    <ul class="con"></ul>
+    <script>
+      const xijingMobile = {
+        title: '西京学院移动化项目',
+        list: [
+          {
+            title: 'appDownload',
+            href: './xijingMobile/appDownload/appDownload.html',
+            desc: '西京学院app下载页面',
+          },
+          {
+            title: 'scanLogin',
+            href: './xijingMobile/scanLogin/autoLogin.html',
+            desc: '扫码登录',
+          },
+          {
+            title: 'goNext.html',
+            href: './xijingMobile/goNext.html',
+            desc: '响应式应用直达跳转',
+          },
+          {
+            title: 'mobileSSO.js',
+            href: './xijingMobile/mobileSSO.js',
+            desc: '用于凯锐登录页在客户端中自动代填登录',
+          },
+          {
+            title: 'mobileLogin.css',
+            href: './xijingMobile/mobileLogin.css',
+            desc: '对PC端登录页进行响应式改造',
+          },
+          {
+            title: 'mobile.less',
+            href: './xijingMobile/mobile.less',
+            desc: ' 对PC端个人中心进行响应式改造',
+          },
+        ],
+      };
+      const testPage = {
+        title: '测试',
+        list: [
+          {
+            title: 'testIDP.html',
+            href: './testPage/testIDP.html',
+            desc: 'IDP测试',
+          },
+          {
+            title: 'copyTest.html',
+            href: './testPage/copyTest.html',
+            desc: '实现H5复制功能',
+          },
+        ],
+      };
+
+      const renderCardList = (list) => {
+        const conDom = document.createElement('div');
+        conDom.setAttribute('class', 'subCon');
+        list.forEach((item) => {
+          const cardDom = document.createElement('ul'); // card
+          cardDom.setAttribute('class', 'card');
+
+          const titleLiDom = document.createElement('li'); // 名称
+          titleLiDom.innerHTML = `<span class='title'>名称：</span><span class='value'><a href=${item.href} target='_block'>${item.title}</a></span>`;
+          cardDom.appendChild(titleLiDom);
+          const descLiDom = document.createElement('li'); // 描述
+          descLiDom.innerHTML = `<span class='title'>描述：</span><span class='value'>${item.desc}</span>`;
+          cardDom.appendChild(descLiDom);
+
+          conDom.appendChild(cardDom);
+        });
+
+        return conDom;
+      };
+
+      const renderGroup = (group) => {
+        const { title, list } = group;
+        // li
+        const liDom = document.createElement('li');
+        // title
+        const titleDom = document.createElement('div');
+        titleDom.setAttribute('class', 'title');
+        titleDom.innerText = title;
+        liDom.appendChild(titleDom);
+        // cardList
+        const cardList = renderCardList(list);
+        liDom.appendChild(cardList);
+
+        return liDom;
+      };
+
+      const groupList = [xijingMobile, testPage];
+      const conDom = document.querySelector('.con');
+      groupList.forEach((group) => {
+        const groupDom = renderGroup(group);
+        conDom.appendChild(groupDom);
+      });
+    </script>
+  </body>
+</html>

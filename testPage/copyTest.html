@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现H5复制功能</title>
+  </head>
+  <body>
+    <button id="copy_btn">复制按钮</button>
+    <script>
+      var copyBtn = document.getElementById("copy_btn");
+      copyBtn.onclick = function () {
+        var val = window.location.href;
+        copyContentH5(val);
+      };
+      //h5复制文本到剪切板
+      function copyContentH5(content) {
+        var copyDom = document.createElement("div");
+        copyDom.innerText = content;
+        copyDom.style.position = "absolute";
+        copyDom.style.top = "0px";
+        copyDom.style.right = "-9999px";
+        document.body.appendChild(copyDom);
+        //创建选中范围
+        var range = document.createRange();
+        range.selectNode(copyDom);
+        //移除剪切板中内容
+        window.getSelection().removeAllRanges();
+        //添加新的内容到剪切板
+        window.getSelection().addRange(range);
+        //复制
+        var successful = document.execCommand("copy");
+        copyDom.parentNode.removeChild(copyDom);
+        try {
+          var msg = successful ? "successful" : "failed";
+          console.log("Copy command was : " + msg);
+          alert('当前页面的URL已复制到剪贴板！')
+        } catch (err) {
+          console.log("Oops , unable to copy!");
+        }
+      }
+    </script>
+  </body>
+</html>

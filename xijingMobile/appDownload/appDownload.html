@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="title">掌上西京APP下载</title>
+  <link rel="stylesheet" href="style/app.css">
+  <style>
+   
+  </style>
+  <!-- <script src="style/jquery-1.10.2.min.htm"></script> -->
+  <script src="style/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="ui-normal" class="ui-bgc">
+    <div class="bgc">
+      <img src="./img/logos.png" alt="" class="logos">
+    </div>
+    <div class="ui-box" >
+      <a class="ui-downapp ui-btn"href='http://59.75.39.29/szxj/szxj/download/xijing-v6.0.1-release.apk'>立即下载</a>
+    </div>
+  </div>
+
+  <div id="ui-weixin" class="ui-bgc">
+    <div class="bgc">
+      <img src="./img/logos.png" alt="" class="logos">
+    </div>
+    <div class="ui-box">
+      <p style="text-align: center; line-height: 80px;">ios客户端正在上架中，请耐心等待……</p>
+    </div>
+  </div>
+      <!-- <button class="ui-downapp" id="copy_btn" onclick="copyVal();">复制链接</button> -->
+    </div>
+  </div>
+</body>
+<script>
+  function is_weixin() {
+    var ua = navigator.userAgent.toLowerCase();
+    //alert(ua);
+    if (ua.match(/MicroMessenger/i) == "micromessenger") {
+      if (ua.match(/iphone/i) == "iphone" || ua.match(/ipad/i) == "ipad") {
+        // 微信IOS
+        return 1;
+        // IOS客户端未上架时使用下面的分支
+        // $("#ui-normal").hide();
+        // $("#ui-weixin").show();
+        return 0;
+      } else {
+        // 微信Android
+        return 2;
+      }
+    } else {
+      if (ua.match(/iphone/i) == "iphone" || ua.match(/ipad/i) == "ipad") {
+        // 浏览器IOS
+        window.location.href = "download-ios.html";
+        return 0;
+        // IOS客户端未上架时使用下面的分支
+        // $("#ui-normal").hide();
+        // $("#ui-weixin").show();
+        // return 0;
+      } else {
+        // 浏览器Android
+        $("body").find("#ui-normal").show();
+        return 0;
+      }
+    }
+  }
+  //h5复制文本到剪切板
+  function copyContentH5(content) {
+    var copyDom = document.createElement("div");
+    copyDom.innerText = content;
+    copyDom.style.position = "absolute";
+    copyDom.style.top = "0px";
+    copyDom.style.right = "-9999px";
+    document.body.appendChild(copyDom);
+    //创建选中范围
+    var range = document.createRange();
+    range.selectNode(copyDom);
+    //移除剪切板中内容
+    window.getSelection().removeAllRanges();
+    //添加新的内容到剪切板
+    window.getSelection().addRange(range);
+    //复制
+    var successful = document.execCommand("copy");
+    copyDom.parentNode.removeChild(copyDom);
+    try {
+      var msg = successful ? "successful" : "failed";
+      console.log("Copy command was : " + msg);
+    } catch (err) {
+      console.log("Oops , unable to copy!");
+    }
+  }
+
+  var isWeixin = is_weixin();
+  var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+  var AndroidTip = $('<div id="weixinTip"><p><img src="img/live_weixin_common.png" alt="微信打开"/></p></div>');
+  var IOSTip = $('<div id="weixinTip"><p><img src="img/live_weixin_common.png" alt="微信打开"/></p></div>');
+  function copyVal(){
+    var val = window.location.href;
+    copyContentH5(val);
+  }
+  if (isWeixin) {
+    $("#title").html("掌上西京-请按下方指示操作");
+    // $("#ui-weixin").show();
+    if (isWeixin == 1) {
+      $("body").append(IOSTip);
+    } else if (isWeixin == 2) {
+      $("body").append(AndroidTip);
+    }
+  }
+  $("#weixinTip").css({
+    "position": "fixed",
+    "left": "0",
+    "top": "0",
+    "height": winHeight,
+    "width": "100%",
+    "z-index": "1000",
+    "background-color": "rgba(0,0,0,0.4)",
+    "filter": "alpha(opacity=80)",
+  });
+  $("#weixinTip p").css({
+    "text-align": "center",
+    "margin-top": "10px",
+    "padding-left": "5%",
+    "padding-right": "5%"
+  });
+  $("#weixinTip p img").css({
+    "width": "250px",
+    "float": "right"
+  });
+</script>
+
+</html>

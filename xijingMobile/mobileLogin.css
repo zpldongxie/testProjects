@@ -1,0 +1,57 @@
+@media only screen and (max-width: 768px) {
+  body {
+    background: #f5f5f5;
+    min-width: auto;
+  }
+  body .xj-school-container {
+    min-width: auto;
+    min-height: auto;
+    overflow: hidden;
+  }
+  body .xj-school-container div::-webkit-scrollbar,
+  body .xj-school-container ul::-webkit-scrollbar {
+    display: none;
+  }
+  body .xj-school-container .carry-fr,
+  body .xj-school-container .carry-fl {
+    float: none;
+  }
+  body .xj-school-container .login-content {
+    width: 100vw;
+    position: inherit;
+    top: 0;
+    left: 0;
+    margin: 0;
+  }
+  body .xj-school-container .login-content .login-header {
+    background-size: 300px;
+    margin-bottom: 20px;
+  }
+  body .xj-school-container .login-content .return-btn,
+  body .xj-school-container .login-content .login-footer {
+    display: none;
+  }
+  body .xj-school-container .login-content .login-main .wenzi-bg {
+    display: none;
+  }
+  body .xj-school-container .login-content .login-main .login-box {
+    width: 90vw;
+    margin: 0 auto;
+    padding: 20px;
+    height: 346px;
+  }
+  body .xj-school-container .login-content .login-main .login-box .pc-box,
+  body .xj-school-container .login-content .login-main .login-box .erweima-box {
+    padding: 0;
+  }
+  body .xj-school-container .login-content .login-main .login-box .change-img-erweima {
+    display: none;
+  }
+  body .xj-school-container .login-content .login-main .login-box form .margin-b-44 {
+    margin-bottom: 20px !important;
+  }
+  body .xj-school-container .login-content .login-main .login-box form .login-input-style,
+  body .xj-school-container .login-content .login-main .login-box form .btn-submit {
+    width: 100%;
+  }
+}

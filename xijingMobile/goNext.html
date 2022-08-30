@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>goNext</title>
+    <!-- <script src="./aes.min.js"></script> -->
+    <script th:src="@{${#themes.code('xjmhNew.prefix')}+'/js/aes.min.js'}"></script>
+  </head>
+  <body>
+    <script>
+      // 获取客户端信息
+      var u = navigator.userAgent,
+        app = navigator.appVersion;
+      var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Linux") > -1; //android终端或者uc浏览器
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    </script>
+
+    <script>
+      // 获取用户信息
+      // ios
+      function setupWebViewJavascriptBridge(callback) {
+        if (window.WebViewJavascriptBridge) {
+          return callback(WebViewJavascriptBridge);
+        }
+        if (window.WVJBCallbacks) {
+          return window.WVJBCallbacks.push(callback);
+        }
+        window.WVJBCallbacks = [callback];
+        var WVJBIframe = document.createElement("iframe");
+        WVJBIframe.style.display = "none";
+        WVJBIframe.src = "wvjbscheme://__BRIDGE_LOADED__";
+        document.documentElement.appendChild(WVJBIframe);
+        setTimeout(function () {
+          document.documentElement.removeChild(WVJBIframe);
+        }, 0);
+      }
+      // android
+      function getUserInfoForAndroid() {
+        return JSON.parse(yspCheckIn.getUserInfo());
+      }
+    </script>
+
+    <script>
+      // 加密并跳转
+      function goNext(uid, host) {
+        var ran = randomString(32);
+
+        var aesCode = encodeURI(
+          encodeURI(
+            aesMinEncrypt(uid + "@" + url, ran.substr(0, 16)) + "." + ran
+          )
+        );
+        aesCode = aesCode
+          .replace(/\+/g, "xMl3Jk")
+          .replace(/\//g, "Por21Ld")
+          .replace(/\=/g, "Ml32");
+
+        var next = host + "/fh-system/admin/mobileCheck?uids=" + aesCode;
+        console.log("next", next);
+        window.open(next);
+        history.go(-1);
+        // window.location.href = next;
+      }
+      //加密
+      function aesMinEncrypt(word, uidAse) {
+        var _word = CryptoJS.enc.Utf8.parse(word),
+          _key = CryptoJS.enc.Utf8.parse(uidAse),
+          _iv = CryptoJS.enc.Utf8.parse(uidAse.toUpperCase());
+        var encrypted = CryptoJS.AES.encrypt(_word, _key, {
+          iv: _iv,
+          mode: CryptoJS.mode.CBC,
+          padding: CryptoJS.pad.Pkcs7,
+        });
+        return encrypted.toString();
+      }
+
+      function randomString(length) {
+        var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var result = "";
+        for (var i = length; i > 0; --i)
+          result += str[Math.floor(Math.random() * str.length)];
+        return result;
+      }
+    </script>
+
+    <script>
+      var hash = window.location.hash
+        ? window.location.hash.substring(1)
+        : null; // 'http://59.75.39.29:8001/fhcloud-client-pc/views/system/qdkq/hyqd/hyqd_list.html';
+      debugger;
+      if (hash) {
+        console.log("hash", hash);
+        var myURL = new URL(hash);
+        var host = myURL.origin;
+        var url = myURL.pathname.replace("/fhcloud-client-pc/views/", "");
+        if (isAndroid) {
+          var userInfo = getUserInfoForAndroid();
+          var uid = userInfo.loginName;
+          goNext(uid, host);
+        } else if (isiOS) {
+          setupWebViewJavascriptBridge(function (bridge) {
+            //客户端已经注册好一个名为“getUserInfo”的方法，H5直接进行调用（方法名也为“getUserInfo”）就行，调用的时候可以传客户端需要的参数
+            bridge.callHandler("getUserInfo", function responseCallback(responseData) {
+              console.log("registerOCmethod:", responseData);
+              var uid = responseData.account;
+              goNext(uid, host);
+            });
+          });
+        } else {
+          window.history.back();
+        }
+      } else {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

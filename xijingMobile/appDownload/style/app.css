@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body .ui-bgc {
+  width: 100vw;
+  height: 100vh;
+}
+body .ui-bgc .bgc {
+  width: 100vw;
+  height: 65vh;
+  background: url(../img/beijing.png) no-repeat center;
+  background-size: cover;
+}
+body .ui-bgc .bgc .logos {
+  width: 140px;
+  margin-left: 15px;
+  margin-top: 25px;
+}
+body .ui-bgc .ui-box {
+  width: 100vw;
+  height: 35vh;
+  position: relative;
+}
+body .ui-bgc .ui-box div {
+  width: 100vw;
+  height: 40px;
+}
+body .ui-bgc .ui-box div .ui-tishi {
+  display: none;
+  text-align: center;
+  color: #222;
+  font-size: 14px;
+  animation: dongHua 1s 1 ease-in-out;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  line-height: 45px;
+}
+@keyframes dongHua {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+body .ui-bgc .ui-box .ui-btn {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+body .ui-bgc .ui-box .ui-downapp {
+  background: #ff6d3a;
+  display: block;
+  width: 12.5rem;
+  height: 2.2rem;
+  border-radius: 5px;
+  position: relative;
+  margin: 0 auto;
+  line-height: 35px;
+  border: none;
+  text-align: center;
+  color: #ffffff;
+  text-decoration: none;
+}
+body .ui-bgc .ui-box .ui-downapp img {
+  width: 14px;
+  height: 14px;
+}
+body .ui-bgc .ui-box .ui-downApp {
+  border: 1px solid #ff6d3a;
+  display: block;
+  width: 198px;
+  height: 33px;
+  border-radius: 5px;
+  top: 1.4rem;
+  position: relative;
+  margin: 0 auto;
+  line-height: 35px;
+  text-align: center;
+  color: #ff6d3a;
+  text-decoration: none;
+}
+body .ui-bgc .ui-box .ui-downApp img {
+  width: 11px;
+  height: 14px;
+}
+body .ui-bgc .ui-box .ui-ios-tip {
+  text-align: center;
+  line-height: 30px;
+  font-size: 12px;
+  margin-top: 1.6rem;
+}

@@ -1,0 +1,81 @@
+<!--
+ * @description: 集成OA测试代码
+ * @author: zpl
+ * @Date: 2020-12-30 11:57:36
+ * @LastEditTime: 2020-12-30 17:24:36
+ * @LastEditors: zpl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OA办公</title>
+  </head>
+  <body>
+    <div class="con">
+      <a id="openApp">打开M3</a>
+      <a
+        id="xtlb"
+        href="#"
+        attr-link="/seeyon/m3/apps/v5/collaboration/html/colAffairs.htm&loginName="
+        style="display: none"
+      >
+        协同列表
+      </a>
+      <a
+        id="dblb"
+        href="#"
+        attr-link="/seeyon/m3/apps/v5/edoc/html/edocList.html&loginName="
+        style="display: none"
+      >
+        待办列表
+      </a>
+    </div>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+      const idpHost = "http://59.75.39.25:30081";
+      const oaHost = "http://59.75.39.39";
+      const getToken = (loginName, okAction) => {
+        $.ajax({
+          url: `${idpHost}/xjxy/api/getOAToken?loginName=${loginName}`,
+          type: "get",
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: (res) => {
+            if (res.error) {
+              console.log("OA认证失败，请稍后重试。");
+            } else {
+              okAction(res.data);
+            }
+          },
+        });
+      };
+    </script>
+    <script>
+      // app唤醒
+      let params = {
+        name: "wj",
+        password: "jyk123456",
+        // "ticket": "xxxxticket",
+        ext: "扩张参数",
+      };
+      params = encodeURI(JSON.stringify(params), "utf-8");
+      const openAppDom = document.querySelector("#openApp");
+      openAppDom.setAttribute("href", `seeyon://m3?loginParams=${params}`);
+
+      // H5
+      const aList = document.querySelectorAll(".con a[attr-link]");
+      getToken("wj", (token) => {
+        console.log("token", token);
+        const linkStart = `${oaHost}/seeyon/H5/collaboration/index.html?token=${token}&html=`;
+
+        [].forEach.call(aList, (item) => {
+          const linkEnd = item.getAttribute("attr-link");
+          item.setAttribute("href", linkStart + linkEnd + 'wj');
+          item.style.display = "block";
+        });
+      });
+    </script>
+  </body>
+</html>

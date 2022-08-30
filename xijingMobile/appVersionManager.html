@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>掌上西京app版本管理</title>
+    <style>
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        background: url("https://my.xijing.edu.cn/cas/themes/xjmhNew/img/dl_bj.png");
+      }
+      .header {
+        height: 3rem;
+        box-shadow: 1px 1px 4px rgb(0 0 0 / 10%);
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .header .headerCon {
+        margin: 0 auto;
+        width: 1000px;
+        line-height: 3rem;
+        text-align: center;
+        font-weight: bold;
+        color: #eee;
+      }
+      .body {
+        margin: 0 auto;
+        width: 1000px;
+        height: calc(100vh - 9rem);
+        padding: 1rem;
+        overflow-y: auto;
+      }
+      .body .form {
+        width: 35rem;
+        padding: 2rem;
+        margin: 6% auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .body .form .row {
+        position: relative;
+        display: flex;
+        margin-bottom: 1rem;
+      }
+      .body .form .row .label {
+        flex: 0 0 5rem;
+        color: #fff;
+        text-align: right;
+      }
+      .body .form .row .val {
+        flex: 1 1 auto;
+      }
+      .body .form .row .val input {
+        height: 1.6rem;
+        padding: 0 0.5rem;
+      }
+      .body .versionCon input {
+        width: 10rem;
+      }
+      .body .urlCon input {
+        width: 25rem;
+      }
+      .body .messageCon input {
+        width: 20rem;
+        margin-bottom: 0.5rem;
+      }
+      .body .messageCon .delIcon {
+        margin-left: 0.5rem;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+      .body .addIcon {
+        position: absolute;
+        left: 5rem;
+        bottom: -1.2rem;
+        cursor: pointer;
+      }
+      .body .submit {
+        color: #fff;
+        background-color: royalblue;
+        border-color: royalblue;
+        border-style: solid;
+        border-width: 1px;
+        box-shadow: none;
+        width: 8rem;
+        line-height: 1.6rem;
+        margin: 1rem auto 0;
+      }
+      .footer {
+        height: 4rem;
+        background-color: #eee;
+      }
+      .footer .footerCon {
+        margin: 0 auto;
+        width: 1000px;
+        line-height: 4rem;
+        text-align: center;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="headerCon">掌上西京app版本管理</div>
+    </div>
+    <div class="body">
+      <div class="form">
+        <div class="row">
+          <div class="label">版本号：</div>
+          <div class="versionCon val">
+            <input class="newVersion" type="text" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">下载地址：</div>
+          <div class="urlCon val">
+            <input class="url" type="text" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">更新说明：</div>
+          <div class="messageCon val"></div>
+          <svg
+            t="1615354608156"
+            class="addIcon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="5689"
+            width="20"
+            height="20"
+          >
+            <path
+              d="M512 512m-512 0a512 512 0 1 0 1024 0 512 512 0 1 0-1024 0Z"
+              fill="#1D75B0"
+              p-id="5690"
+            ></path>
+            <path
+              d="M713.216 462.336H310.784c-27.648 0-49.664 22.528-49.664 49.664s22.528 49.664 49.664 49.664h402.432c27.648 0 49.664-22.528 49.664-49.664s-22.528-49.664-49.664-49.664z"
+              fill="#FFFFFF"
+              p-id="5691"
+            ></path>
+            <path
+              d="M462.336 310.784v402.432c0 27.648 22.528 49.664 49.664 49.664s49.664-22.528 49.664-49.664V310.784c0-27.648-22.528-49.664-49.664-49.664s-49.664 22.528-49.664 49.664z"
+              fill="#FFFFFF"
+              p-id="5692"
+            ></path>
+          </svg>
+        </div>
+        <div class="row">
+          <button class="submit">提交</button>
+        </div>
+      </div>
+      <div style="display: none">
+        <svg
+          t="1615353435017"
+          class="delIcon"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="2673"
+          width="16"
+          height="16"
+        >
+          <path
+            d="M512.339968 958.818304c-247.595008 0-448.272384-200.758272-448.272384-448.24576 0-247.568384 200.677376-448.272384 448.272384-448.272384 247.54176 0 448.244736 200.704 448.244736 448.272384C960.584704 758.060032 759.881728 958.818304 512.339968 958.818304L512.339968 958.818304zM512.339968 118.35904c-216.626176 0-392.213504 175.587328-392.213504 392.213504 0 216.599552 175.587328 392.214528 392.213504 392.214528 216.598528 0 392.214528-175.614976 392.214528-392.214528C904.554496 293.946368 728.938496 118.35904 512.339968 118.35904L512.339968 118.35904zM694.985728 537.903104 329.693184 537.903104c-15.074304 0-27.33056-12.255232-27.33056-27.33056 0-15.156224 12.256256-27.413504 27.33056-27.413504l365.292544 0c15.102976 0 27.359232 12.256256 27.359232 27.413504C722.34496 525.647872 710.088704 537.903104 694.985728 537.903104L694.985728 537.903104z"
+            p-id="2674"
+            fill="#8a8a8a"
+          ></path>
+        </svg>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footerCon">版权所有：西京学院</div>
+    </div>
+    <script>
+      const Ajax = {
+        get: function (url, fn) {
+          // XMLHttpRequest对象用于在后台与服务器交换数据
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          xhr.onreadystatechange = function () {
+            // readyState == 4说明请求已完成
+            if (
+              (xhr.readyState == 4 && xhr.status == 200) ||
+              xhr.status == 304
+            ) {
+              // 从服务器获得数据
+              fn.call(this, xhr.responseText);
+            }
+          };
+          xhr.send();
+        },
+        // datat应为'a=a1&b=b1'这种字符串格式，在jq里如果data为对象会自动将对象转成这种字符串格式
+        post: function (url, data, fn) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", url, true);
+          // 添加http头，发送信息至服务器时内容编码类型
+          xhr.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+          );
+          xhr.onreadystatechange = function () {
+            if (
+              xhr.readyState == 4 &&
+              (xhr.status == 200 || xhr.status == 304)
+            ) {
+              fn.call(this, xhr.responseText);
+            }
+          };
+          xhr.send(`data=${data}`);
+        },
+      };
+    </script>
+    <script>
+      /**
+       * 创建删除按钮
+       **/
+      const createDelIcon = () => {
+        const svgDom = document.querySelector(".delIcon");
+        return svgDom.cloneNode(true);
+      };
+      /**
+       * 创建更新说明行
+       **/
+      const createMessageDom = (msgConDom, msg = "") => {
+        const messageRowDom = document.createElement("div");
+
+        const msgDom = document.createElement("input");
+        msgDom.type = "text";
+        msgDom.className = "message";
+        msgDom.value = msg;
+
+        const delIcon = createDelIcon();
+        delIcon.onclick = () => {
+          msgConDom.removeChild(messageRowDom);
+        };
+
+        messageRowDom.appendChild(msgDom);
+        messageRowDom.appendChild(delIcon);
+
+        return messageRowDom;
+      };
+    </script>
+    <script>
+      // 信息回填
+      Ajax.get("http://59.75.39.25:30081/xjxy/api/getAppVersion", (res) => {
+        const result = JSON.parse(res);
+        const { errCode } = result;
+        if (errCode === "0") {
+          const {
+            data: { newVersion, url, message },
+          } = JSON.parse(res);
+
+          const nvDom = document.querySelector(".newVersion");
+          nvDom && (nvDom.value = newVersion);
+
+          const urlDom = document.querySelector(".url");
+          urlDom && (urlDom.value = url);
+
+          const msgConDom = document.querySelector(".messageCon");
+          if (msgConDom) {
+            msgConDom.innerHTML = "";
+            message.forEach((msg) => {
+              const messageRowDom = createMessageDom(msgConDom, msg);
+              msgConDom.appendChild(messageRowDom);
+            });
+          }
+        }
+      });
+    </script>
+    <script>
+      // 添加更新说明
+      const addBtn = document.querySelector(".addIcon");
+      if (addBtn) {
+        addBtn.onclick = () => {
+          const msgConDom = document.querySelector(".messageCon");
+          const messageRowDom = createMessageDom(msgConDom);
+          msgConDom.appendChild(messageRowDom);
+        };
+      }
+    </script>
+    <script>
+      // 提交设置
+      const submitBtn = document.querySelector(".submit");
+      if (submitBtn) {
+        submitBtn.onclick = () => {
+          const nvDom = document.querySelector(".newVersion");
+          const newVersion = nvDom.value;
+
+          const urlDom = document.querySelector(".url");
+          const url = urlDom.value;
+
+          const msgDom = document.querySelectorAll(".message");
+          const message = [].map.call(msgDom, (dom) => dom.value);
+
+          const returnValue = { newVersion, url, message };
+          console.log(returnValue);
+          Ajax.post(
+            "http://59.75.39.25:30081/xjxy/api/setAppVersion",
+            JSON.stringify(returnValue),
+            (res) => {
+              const result = JSON.parse(res);
+              if (result.errCode === "0") {
+                alert("操作成功");
+              } else {
+                alert("操作失败！");
+              }
+            }
+          );
+        };
+      }
+    </script>
+  </body>
+</html>

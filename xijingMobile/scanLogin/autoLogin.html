@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>扫码登录</title>
+  <style>
+    .container {
+      padding-top: 40%;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .welcome {
+      margin: 2rem 1rem;
+      color: #666;
+    }
+    .welcome .name {
+      color: #333;
+    }
+    .btn {
+      margin-top: 4rem;
+      padding: 10px 50px;
+      font-size: 16px;
+      color: #04c4c4;
+      background-color: #fff;
+      border: 1px solid #04c4c4;
+      border-radius: 6px;
+      font-weight: 500;
+      line-height: 20px;
+      vertical-align: middle;
+      user-select: none;
+      width: 12rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <img
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALsAAACSCAYAAAFqNIsCAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjOTEyZTg0MS1jNTk1LTQ1NDUtYmVhYy05YzlmODM0NDUyZjIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6N0ZFNTJBQkRGOEM1MTFFQTk2NTdCNUFBOEEzNEY2QUEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6N0ZFNTJBQkNGOEM1MTFFQTk2NTdCNUFBOEEzNEY2QUEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6YzkxMmU4NDEtYzU5NS00NTQ1LWJlYWMtOWM5ZjgzNDQ1MmYyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmM5MTJlODQxLWM1OTUtNDU0NS1iZWFjLTljOWY4MzQ0NTJmMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pl/A85AAAAVwSURBVHjaYkxLS2MAgvtArMBAfcDIAiQe0MhwEPjPBCTkGWgImBhoDEYtGLVg1ILhYsFnWloAKk35QKUejcxnZPz/H7/Z6enpeOVnzpw5+CP5GTQIcWG8ACCAGKFVJi3iIAwUwRYgS2gVNCeGZOYaNXzU8FHDB7vhbLQ03JdAmU02JrXK+49ePOOr8mga5izE9I/w8PFWMgABhFzNWdKy4qAy+AlKiCzY4mkIAHZYj3bIglHHjzp+1PGjjh91/KjjRx0/6ngsjmdnoN0AFq2AAbhJTKinQAgQGDwj2GIlNLg2muYHIwAIwK4dmwAIA1EYDmIprmBtZ+kiuqObOIKla5gmuQMPrE1ADv/AVUL4hCTwcrEktUptTsyH1GgZU9dldJSmZttLzSNWeRn7nbdPr2tef2DgtAEPHjx48ODBgwcPHjx48ODBgwdfc3RS0fCTM7w+Ge71olUvWL11Rhapq6gz8mVXhA0L/o/4tsIc6eW3EApbSVkAdu7mBGEYjMO4HxdXcCRn0BU82iH0piPoUddyh4JSE0iht6IhLcXfA3+aa5+EN4Gmb/tBbRnymmGoBfOOS36bpNdpFqVc6uR6F8Xf0kysLMbitI6vCy7srsSDeOJBPPEgnngQTzyIJ554EE88iCcexBMP4qdG91JQQ8c44ud0DEKj1Kjx/yn+nsZnOopzSc9HrPHxrvwx5BCy56Y4p5Cq3VyrlKkQm5Svp3wgyG6XlUNfn/q+k0Gu+NyfUmyuTjUgnvheNrPvu753a/0veY790h8B2Lt73IRhAACjVmc4QPkZe4AegxmWbr1Bz9G9M+rO2IuUnZHCBbqwYRMHeewQk0a8T7KEWBBPIdiR4rT3QKXSvvufcSxDxT3477DfOL7ieA3N/ofXo/09NPfmvADvvFF2PWXnC/qqmLunVes4uDmsy5E8P4p10iqhb/Ibz3G85Z+Duj29pKsA7XYFm/LP9JtP1bamjubr0AUduqBDF3Togg4duqBDF3Togg5d0KFDF3Togg5d0KELOnTogg5d0KELOnRBhw5d0KELOnRBH0Y2RO4Z3WbI9bMRsnM6dEGHLujQ9Vf0fX69x1G11vcnLY7medI+tSq9SbOHYjW641G1XbvqLy8DPA1sOX2MYzJEfY9sMHsxZRR06IIOXdCh65+gH8Ltn3W0uHf0xx4+c93nFz4L0N4dq7QVhQEcv4KYwSdocRLnuvYh6tDFRUchS9qOOnTq5pYiDtnVReLm7hs0XYWCDq2+goqk3yHn0nBo6WZyc38/+IYchJCTfy7x3sCdvrlU7X01uXfphgMBDZVOLu7HXPzrCHOYD3kXQqfhUr/D3PNhvZjOqqc71v2IWSu+V7yL+WbfaJh0/7TL6s8Vl3QDu52Y9XRkPy1C71eTC6dCp4lGud/+1Fp6fJZi3yr+eN9+sQAOisdbKfZOsfhon1gAD8XjFSd7aQ2xI3YQO4gdxA5iB7GD2EHsIHYQO2IHsYPYQewgdhA7iB3EDmIHsSN2EDuIHcQOYgexg9hB7CB2EDtitwWIHcQOYgexg9hB7CB2EDuIHcRO2yz/ZW1sW2hL7Eu2hQUx9jUG39lB7CB2EDvMZezXxdpb28ICKDu+TbF/KRavYjbtFQ32Jnc87XOK/TRme2qxEzOKeYj5mj8hq/aPObaaOz3K3X7PHddS3yf1RaXzanKBqR/Ty2srMR/zQBMdx3yKeS7/QU0LH6rJFdT0qdiNGcbcxDzZN+bYU+50mLvt5I57dejJ0njczp/CdLvdl37KcqNn+rOMwWDQuvfcqUfEDmIHsYPYQewgdhA7iB3+a9kWVL9iXs3geWdx6fou5rUje3vtxdy34HX+zK+1tX4DG+ERytlbOnkAAAAASUVORK5CYII="
+          alt=""
+          width="40%"
+  />
+  <div class="welcome"></div>
+  <div>
+    <button class="btn">确认授权</button>
+  </div>
+</div>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<!--<script src="/themes/xjmhNew/js/login.js"></script>-->
+<script th:src="@{${#themes.code('xjmhNew.prefix')}+'/js/aes.min.js'}"></script>
+<script>
+  // 获取客户端信息
+  var u = navigator.userAgent,
+    app = navigator.appVersion;
+  var isAndroid = u.indexOf("Android") > -1 || u.indexOf("Linux") > -1; //android终端或者uc浏览器
+  var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+</script>
+
+<script>
+  // 获取用户信息
+  // ios
+  function setupWebViewJavascriptBridge(callback) {
+    if (window.WebViewJavascriptBridge) {
+      return callback(WebViewJavascriptBridge);
+    }
+    if (window.WVJBCallbacks) {
+      return window.WVJBCallbacks.push(callback);
+    }
+    window.WVJBCallbacks = [callback];
+    var WVJBIframe = document.createElement("iframe");
+    WVJBIframe.style.display = "none";
+    WVJBIframe.src = "wvjbscheme://__BRIDGE_LOADED__";
+    document.documentElement.appendChild(WVJBIframe);
+    setTimeout(function () {
+      document.documentElement.removeChild(WVJBIframe);
+    }, 0);
+  }
+  // android
+  function getUserInfoForAndroid() {
+    return JSON.parse(yspCheckIn.getUserInfo());
+  }
+</script>
+<script>
+  var timeOut =15 * 60 * 100; // 过期时间，1.5分钟
+  function doLogin(uid,yhm) {
+    var aesCode = aesMinEncrypt(uid+"@"+yhm,uid.substring(0,8));
+    $.ajax({
+      url: "",
+      type: "post",
+      data: {uids:aesCode+'.'+uid},
+      success: function(data){
+        // alert('.login')
+        // console.log(data);
+      }
+    });
+  }
+  //加密
+  function aesMinEncrypt(word,uidAse){
+    var _word = CryptoJS.enc.Utf8.parse(word),
+            _key = CryptoJS.enc.Utf8.parse(uidAse),
+            _iv = CryptoJS.enc.Utf8.parse(uidAse.toUpperCase());
+    var encrypted = CryptoJS.AES.encrypt(_word, _key, {
+      iv: _iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+    return encrypted.toString();
+  }
+</script>
+<script th:inline="javascript">
+  /**
+   * 允许登录
+   **/
+  function initLoginMethod(userInfo, time, uid) {
+    console.log('userInfo', userInfo);
+    const { name, loginName, account } = userInfo;
+    $('.welcome').html(`<span class='name'>${name || ''}</span> 你好，请授权PC端进行登录!`);
+    $('.btn').off().click(function(){
+      var now = new Date().getTime();
+      if(now - time > timeOut) {
+        $('.welcome').text('等待超时，请刷新二维码重新扫描!');
+      } else {
+        doLogin(uid, loginName || account);
+        $('.welcome').text('扫码登录完成，请点击页面左上角返回!');
+      }
+    });
+  }
+
+  // 入口 
+  var now = new Date().getTime();
+  $(function (){
+    var time = [[${jwt}]];
+    var uid = [[${uid}]];
+    if(now - time > timeOut) {
+      // 超时
+      $('.welcome').text('等待超时，请刷新二维码重新扫描!');
+      $('.btn').hide();
+    } else if (isAndroid) {
+      var userInfo = getUserInfoForAndroid();
+      initLoginMethod(userInfo, time, uid);
+    } else if (isiOS) {
+      setupWebViewJavascriptBridge(function (bridge) {
+        //客户端已经注册好一个名为“getUserInfo”的方法，H5直接进行调用（方法名也为“getUserInfo”）就行，调用的时候可以传客户端需要的参数
+        bridge.callHandler("getUserInfo", function responseCallback(responseData) {
+          console.log("registerOCmethod:", responseData);
+          initLoginMethod(responseData, time, uid)
+        });
+      });
+    } else {
+      // 未登录
+      $('.welcome').text('请使用掌上西京客户端,扫码登录!');
+      $('.btn').hide();
+    }
+  });
+</script>
+</body>
+</html>
