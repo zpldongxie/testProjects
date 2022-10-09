@@ -1,14 +1,36 @@
 'use strict';
 
+const $con = document.querySelector('#con');
+/**
+ * 页面追加一条信息
+ * @param {string} message 消息内容
+ * @param {'success' | 'error' | undefined} status 消息状态
+ */
+function appendMessage(message, status) {
+  const $newNode = document.createElement('div');
+  if (status === 'success') {
+    $newNode.style.color = 'green';
+  }
+  if (status === 'error') {
+    $newNode.style.color = 'red';
+  }
+  $newNode.innerText = message;
+  $con.appendChild($newNode);
+}
+
+/**
+ * 清除页面信息
+ */
+function clearMessage() {
+  $con.innerHTML = '';
+}
 class ComWX {
   /**
    * 企业微信操作类
    * @param {string} suiteID 企业微信应用ID
-   * @param {string} miniprogramID 小程序ID
    */
-  constructor(suiteID, miniprogramID) {
+  constructor(suiteID) {
     this.suiteID = suiteID;
-    this.miniprogramID = miniprogramID;
   }
 
   /**
@@ -18,7 +40,7 @@ class ComWX {
   async getAuthPath() {
     console.log('开始跳转向认证页');
     try {
-      const res = await fetch(`/api/auth/authorizeUrl?suiteID=${this.suiteID}`, {
+      const res = await fetch(`/api_wechat/auth/authorizeUrl?suiteID=${this.suiteID}`, {
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
         },
@@ -42,7 +64,7 @@ class ComWX {
    */
   async getUserInfo(code, state) {
     try {
-      const res = await fetch(`/api/auth/loginInfo?code=${code}&state=${state}&suiteID=${this.suiteID}`);
+      const res = await fetch(`/api_wechat/auth/loginInfo?code=${code}&state=${state}&suiteID=${this.suiteID}`);
       const { errCode, data } = await res.json();
       if (errCode) {
         return null;
@@ -62,7 +84,7 @@ class ComWX {
     console.log(`计算企业签名...`);
     try {
       const url = encodeURIComponent(window.location.href.split('#')[0]);
-      const res = await fetch(`/api/auth/qyJsSignature?suiteID=${this.suiteID}&CorpId=${CorpId}&url=${url}`);
+      const res = await fetch(`/api_wechat/auth/qyJsSignature?suiteID=${this.suiteID}&CorpId=${CorpId}&url=${url}`);
       const jsonRes = await res.json();
       const { errCode, data } = jsonRes;
       if (errCode) {
@@ -85,7 +107,7 @@ class ComWX {
     console.log(`计算应用签名...`);
     try {
       const url = encodeURIComponent(window.location.href.split('#')[0]);
-      const res = await fetch(`/api/auth/yyJsSignature?suiteID=${this.suiteID}&CorpId=${CorpId}&url=${url}`);
+      const res = await fetch(`/api_wechat/auth/yyJsSignature?suiteID=${this.suiteID}&CorpId=${CorpId}&url=${url}`);
       const jsonRes = await res.json();
       const { errCode, data } = jsonRes;
       if (errCode) {
@@ -163,10 +185,11 @@ class ComWX {
 
   /**
    * 打开企业微信小程序
+   * @param {string} MiniprogramID 企业微信小程序ID
    * @param {function} okCallback 成功回调
    * @param {function} errCallback 失败回调
    */
-  openMiniProgram(okCallback, errCallback) {
+  openMiniProgram(MiniprogramID, okCallback, errCallback) {
     console.log('开始跳转企业微信小程序...');
     wx.invoke(
       'launchMiniprogram',
@@ -186,5 +209,26 @@ class ComWX {
         }
       }
     );
+  }
+
+  /**
+   * 获取微信小程序跳转链接-企业批改
+   * @param {string} CorpId 当前登录企业微信的企业ID
+   * @param {string} UserId 当前登录企业微信的用户ID
+   * @param {string} DeviceId 当前登录企业微信的部门ID
+   * @return {Primse<string | null>}
+   */
+  async getWechatAppUrl(CorpId, UserId, DeviceId) {
+    appendMessage(`获取微信小程序跳转链接...`);
+    const res = await fetch(`/api/linghang/ZYPGUrl?CorpId=${CorpId}&UserId=${UserId}&DeviceId=${DeviceId}`);
+    const jsonRes = await res.json();
+    console.log('🚀 ~ file: index.js ~ line 74 ~ getWechatAppUrl ~ jsonRes', jsonRes);
+    const { errCode, data } = jsonRes;
+    if (errCode) {
+      appendMessage(`获取微信小程序跳转链接: 失败`, 'error');
+      return null;
+    }
+    appendMessage(`获取微信小程序跳转链接: 成功`, 'success');
+    return data;
   }
 }

@@ -28,7 +28,7 @@ function clearMessage() {
   $con.innerHTML = '';
 }
 
-const comWx = new ComWX(suiteID, MiniprogramID);
+const comWx = new ComWX(suiteID);
 
 /**
  * 重新获取用户信息并进行缓存
@@ -64,25 +64,6 @@ async function updateCurrentUserInfo() {
   }
 }
 
-/**
- * 获取微信小程序跳转链接
- * @param {string} UserId 当前登录企业微信的用户ID
- * @return {Primse<string | null>}
- */
-async function getWechatAppUrl(UserId) {
-  appendMessage(`获取微信小程序跳转链接...`);
-  const res = await fetch(`/api/lh6/ZYPGUrl?&UserId=${UserId}`);
-  const jsonRes = await res.json();
-  console.log('🚀 ~ file: index.js ~ line 74 ~ getWechatAppUrl ~ jsonRes', jsonRes);
-  const { errCode, data } = jsonRes;
-  if (errCode) {
-    appendMessage(`获取微信小程序跳转链接: 失败`, 'error');
-    return null;
-  }
-  appendMessage(`获取微信小程序跳转链接: 成功`, 'success');
-  return data;
-}
-
 async function init() {
   clearMessage();
   const sessionUser = sessionStorage.getItem('user');
@@ -94,7 +75,7 @@ async function init() {
     const { CorpId, UserId, open_userid, DeviceId } = currentUser;
     appendMessage(`当前用户： ${UserId}`);
     appendMessage(`所属部门： ${DeviceId}`);
-    const wechatAppUrl = await getWechatAppUrl(UserId);
+    const wechatAppUrl = await comWx.getWechatAppUrl(CorpId, UserId, DeviceId);
     appendMessage(`小程序跳转链接： ${wechatAppUrl}`);
     if (wechatAppUrl) {
       // window.location.href = wechatAppUrl;
@@ -120,6 +101,7 @@ async function init() {
         appendMessage(`注册应用权限: 成功`, 'success');
         // appendMessage('开始跳转企业微信小程序...');
         // comWx.openMiniProgram(
+        //   MiniprogramID,
         //   () => {
         //     appendMessage('已正常跳转', 'success');
         //     window.close();
